@@ -1,1 +1,1 @@
-# truth_or_dare
+# Truth Or Dare Mobile App
