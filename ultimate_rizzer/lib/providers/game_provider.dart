@@ -97,4 +97,14 @@ class GameProvider with ChangeNotifier {
     _currentCard = null;
     notifyListeners();
   }
+
+  void setPlayers(List<String> playerNames) {
+    _players = playerNames;
+    notifyListeners();
+  }
+
+  void setTotalRounds(int rounds) {
+    _totalRounds = rounds;
+    notifyListeners();
+  }
 }
