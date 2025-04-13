@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import '../data/rizz_cards.dart';
+import '../services/ad_service.dart';
 
 class GameProvider with ChangeNotifier {
   List<String> _players = [];
@@ -78,6 +79,8 @@ class GameProvider with ChangeNotifier {
       } else {
         // All players have voted, go to results
         _currentPlayerIndex = 0;
+        // Show ad after the game ends
+        AdService().showInterstitialAd();
       }
       notifyListeners();
     }
