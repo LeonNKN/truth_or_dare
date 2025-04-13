@@ -1,0 +1,2 @@
+C:/Users/USER/Desktop/FINAL_PROJECT/true_or_dare_2/truth_or_dare/ultimate_rizzer/android/app/.cxx/Debug/4q176x42/x86/CMakeFiles/edit_cache.dir
+C:/Users/USER/Desktop/FINAL_PROJECT/true_or_dare_2/truth_or_dare/ultimate_rizzer/android/app/.cxx/Debug/4q176x42/x86/CMakeFiles/rebuild_cache.dir

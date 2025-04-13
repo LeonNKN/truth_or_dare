@@ -16,86 +16,89 @@ migrate_working_dir/
 *.iws
 .idea/
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
+# Visual Studio Code related
+.classpath
+.project
+.settings/
+.vscode/
 
 # Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
-.dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
-.packages
-.pub-cache/
-.pub/
-/build/
+ultimate_rizzer/**/doc/api/
+ultimate_rizzer/**/ios/Flutter/.last_build_id
+ultimate_rizzer/.dart_tool/
+ultimate_rizzer/.flutter-plugins
+ultimate_rizzer/.flutter-plugins-dependencies
+ultimate_rizzer/.packages
+ultimate_rizzer/.pub-cache/
+ultimate_rizzer/.pub/
+ultimate_rizzer/build/
+ultimate_rizzer/flutter_*.png
+ultimate_rizzer/linked_*.ds
+ultimate_rizzer/unlinked.ds
+ultimate_rizzer/unlinked_spec.ds
 
-# Symbolication related
-app.*.symbols
-
-# Obfuscation related
-app.*.map.json
-
-# Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
+# Android related
+ultimate_rizzer/**/android/**/gradle-wrapper.jar
+ultimate_rizzer/.gradle/
+ultimate_rizzer/**/android/captures/
+ultimate_rizzer/**/android/gradlew
+ultimate_rizzer/**/android/gradlew.bat
+ultimate_rizzer/**/android/local.properties
+ultimate_rizzer/**/android/**/GeneratedPluginRegistrant.java
+ultimate_rizzer/**/android/key.properties
+ultimate_rizzer/*.jks
 
 # iOS/XCode related
-**/ios/**/*.mode1v3
-**/ios/**/*.mode2v3
-**/ios/**/*.moved-aside
-**/ios/**/*.pbxuser
-**/ios/**/*.perspectivev3
-**/ios/**/*sync/
-**/ios/**/.sconsign.dblite
-**/ios/**/.tags*
-**/ios/**/.vagrant/
-**/ios/**/DerivedData/
-**/ios/**/Icon?
-**/ios/**/Pods/
-**/ios/**/.symlinks/
-**/ios/**/profile
-**/ios/**/xcuserdata
-**/ios/.generated/
-**/ios/Flutter/App.framework
-**/ios/Flutter/Flutter.framework
-**/ios/Flutter/Flutter.podspec
-**/ios/Flutter/Generated.xcconfig
-**/ios/Flutter/app.flx
-**/ios/Flutter/app.zip
-**/ios/Flutter/flutter_assets/
-**/ios/ServiceDefinitions.json
-**/ios/Runner/GeneratedPluginRegistrant.*
+ultimate_rizzer/**/ios/**/*.mode1v3
+ultimate_rizzer/**/ios/**/*.mode2v3
+ultimate_rizzer/**/ios/**/*.moved-aside
+ultimate_rizzer/**/ios/**/*.pbxuser
+ultimate_rizzer/**/ios/**/*.perspectivev3
+ultimate_rizzer/**/ios/**/*sync/
+ultimate_rizzer/**/ios/**/.sconsign.dblite
+ultimate_rizzer/**/ios/**/.tags*
+ultimate_rizzer/**/ios/**/.vagrant/
+ultimate_rizzer/**/ios/**/DerivedData/
+ultimate_rizzer/**/ios/**/Icon?
+ultimate_rizzer/**/ios/**/Pods/
+ultimate_rizzer/**/ios/**/.symlinks/
+ultimate_rizzer/**/ios/**/profile
+ultimate_rizzer/**/ios/**/xcuserdata
+ultimate_rizzer/**/ios/.generated/
+ultimate_rizzer/**/ios/Flutter/.last_build_id
+ultimate_rizzer/**/ios/Flutter/App.framework
+ultimate_rizzer/**/ios/Flutter/Flutter.framework
+ultimate_rizzer/**/ios/Flutter/Flutter.podspec
+ultimate_rizzer/**/ios/Flutter/Generated.xcconfig
+ultimate_rizzer/**/ios/Flutter/ephemeral
+ultimate_rizzer/**/ios/Flutter/app.flx
+ultimate_rizzer/**/ios/Flutter/app.zip
+ultimate_rizzer/**/ios/Flutter/flutter_assets/
+ultimate_rizzer/**/ios/Flutter/flutter_export_environment.sh
+ultimate_rizzer/**/ios/ServiceDefinitions.json
+ultimate_rizzer/**/ios/Runner/GeneratedPluginRegistrant.*
 
-# Exceptions to above rules.
-!**/ios/**/default.mode1v3
-!**/ios/**/default.mode2v3
-!**/ios/**/default.pbxuser
-!**/ios/**/default.perspectivev3
-!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
-
-# Web related
-lib/generated_plugin_registrant.dart
+# macOS
+ultimate_rizzer/**/macos/Flutter/GeneratedPluginRegistrant.swift
+ultimate_rizzer/**/macos/Flutter/ephemeral
 
 # Coverage
-coverage/
+ultimate_rizzer/coverage/
 
-# Temporary files
-*.tmp
-*.temp
-*.bak
-*.swp
-*~
+# Symbols
+ultimate_rizzer/app.*.symbols
 
-# Local environment files
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+# Exceptions to above rules.
+!ultimate_rizzer/**/ios/**/default.mode1v3
+!ultimate_rizzer/**/ios/**/default.mode2v3
+!ultimate_rizzer/**/ios/**/default.pbxuser
+!ultimate_rizzer/**/ios/**/default.perspectivev3
+!ultimate_rizzer/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 
-# Flutter web
-web/lib/generated_plugin_registrant.dart 
+# Obfuscation related
+ultimate_rizzer/app.*.map.json
+
+# Android Studio will place build artifacts here
+ultimate_rizzer/android/app/debug
+ultimate_rizzer/android/app/profile
+ultimate_rizzer/android/app/release 

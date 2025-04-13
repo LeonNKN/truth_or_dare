@@ -20,6 +20,7 @@ class GameProvider with ChangeNotifier {
   Map<String, int> get scores => _scores;
   bool get isVotingPhase => _isVotingPhase;
   RizzCard? get currentCard => _currentCard;
+  List<String> get votedPlayers => _votedPlayers;
 
   void initializeGame(List<String> players, int totalRounds) {
     _players = players;
@@ -59,6 +60,7 @@ class GameProvider with ChangeNotifier {
         _currentRound++;
       } else {
         _isVotingPhase = true;
+        _currentPlayerIndex = 0;
       }
     }
     _currentCard = null;
@@ -69,25 +71,46 @@ class GameProvider with ChangeNotifier {
     if (!_votedPlayers.contains(currentPlayer)) {
       _scores[playerName] = (_scores[playerName] ?? 0) + 1;
       _votedPlayers.add(currentPlayer);
-      nextTurn();
+
+      // Move to next player for voting
+      if (_currentPlayerIndex < _players.length - 1) {
+        _currentPlayerIndex++;
+      } else {
+        // All players have voted, go to results
+        _currentPlayerIndex = 0;
+      }
+      notifyListeners();
     }
   }
 
-  String getWinner() {
-    String winner = '';
+  List<String> getWinners() {
     int maxScore = 0;
+    List<String> winners = [];
+
+    // Find the maximum score
     _scores.forEach((player, score) {
       if (score > maxScore) {
         maxScore = score;
-        winner = player;
       }
     });
-    return winner;
+
+    // Find all players with the maximum score
+    _scores.forEach((player, score) {
+      if (score == maxScore) {
+        winners.add(player);
+      }
+    });
+
+    return winners;
+  }
+
+  bool isTie() {
+    return getWinners().length > 1;
   }
 
   void resetGame() {
     _players = [];
-    _currentRound = 0;
+    _currentRound = 1;
     _totalRounds = 0;
     _currentPlayerIndex = 0;
     _scores = {};

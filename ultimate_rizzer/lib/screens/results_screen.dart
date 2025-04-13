@@ -10,7 +10,8 @@ class ResultsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<GameProvider>(
       builder: (context, gameProvider, child) {
-        final winner = gameProvider.getWinner();
+        final winners = gameProvider.getWinners();
+        final isTie = gameProvider.isTie();
         final scores = gameProvider.scores;
 
         return Scaffold(
@@ -21,7 +22,7 @@ class ResultsScreen extends StatelessWidget {
                 end: Alignment.bottomCenter,
                 colors: [
                   Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                  Theme.of(context).colorScheme.background,
+                  Theme.of(context).colorScheme.surface,
                 ],
               ),
             ),
@@ -33,20 +34,39 @@ class ResultsScreen extends StatelessWidget {
                   children: [
                     const SizedBox(height: 40),
                     Text(
-                      'The Ultimate Rizzer is...',
+                      isTie ? 'It\'s a Tie!' : 'The Ultimate Rizzer is...',
                       style: Theme.of(context).textTheme.headlineSmall,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 20),
-                    Text(
-                      winner,
-                      style:
-                          Theme.of(context).textTheme.headlineLarge?.copyWith(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontWeight: FontWeight.bold,
-                              ),
-                      textAlign: TextAlign.center,
-                    ),
+                    if (isTie)
+                      Column(
+                        children: winners
+                            .map((winner) => Text(
+                                  winner,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineLarge
+                                      ?.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                  textAlign: TextAlign.center,
+                                ))
+                            .toList(),
+                      )
+                    else
+                      Text(
+                        winners.first,
+                        style:
+                            Theme.of(context).textTheme.headlineLarge?.copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                        textAlign: TextAlign.center,
+                      ),
                     const SizedBox(height: 40),
                     const Icon(
                       Icons.emoji_events,

@@ -66,7 +66,7 @@ class _PlayerSetupScreenState extends State<PlayerSetupScreen> {
             end: Alignment.bottomCenter,
             colors: [
               Theme.of(context).colorScheme.primary.withOpacity(0.1),
-              Theme.of(context).colorScheme.background,
+              Theme.of(context).colorScheme.surface,
             ],
           ),
         ),
@@ -128,6 +128,12 @@ class _PlayerSetupScreenState extends State<PlayerSetupScreen> {
                                   controller: _controllers[index],
                                   decoration: InputDecoration(
                                     labelText: 'Player ${index + 1}',
+                                    hintText: 'Enter player name',
+                                    hintStyle: TextStyle(
+                                      color: Theme.of(context)
+                                          .hintColor
+                                          .withOpacity(0.7),
+                                    ),
                                     border: const OutlineInputBorder(),
                                   ),
                                   onChanged: (_) => setState(() {}),
@@ -156,7 +162,15 @@ class _PlayerSetupScreenState extends State<PlayerSetupScreen> {
                             ),
                           );
                         }
-                      : null,
+                      : () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                  'Please enter all player names before proceeding'),
+                              duration: Duration(seconds: 2),
+                            ),
+                          );
+                        },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 48,

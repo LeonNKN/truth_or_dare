@@ -26,7 +26,7 @@ class _RoundSetupScreenState extends State<RoundSetupScreen> {
             end: Alignment.bottomCenter,
             colors: [
               Theme.of(context).colorScheme.primary.withOpacity(0.1),
-              Theme.of(context).colorScheme.background,
+              Theme.of(context).colorScheme.surface,
             ],
           ),
         ),
@@ -72,7 +72,7 @@ class _RoundSetupScreenState extends State<RoundSetupScreen> {
                   onPressed: () {
                     final gameProvider =
                         Provider.of<GameProvider>(context, listen: false);
-                    gameProvider.setTotalRounds(rounds);
+                    gameProvider.initializeGame(gameProvider.players, rounds);
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

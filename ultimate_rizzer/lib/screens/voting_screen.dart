@@ -21,7 +21,7 @@ class VotingScreen extends StatelessWidget {
                 end: Alignment.bottomCenter,
                 colors: [
                   Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                  Theme.of(context).colorScheme.background,
+                  Theme.of(context).colorScheme.surface,
                 ],
               ),
             ),
@@ -68,8 +68,8 @@ class VotingScreen extends StatelessWidget {
                               trailing: const Icon(Icons.how_to_vote),
                               onTap: () {
                                 gameProvider.voteForPlayer(player);
-                                if (gameProvider.currentPlayer ==
-                                    gameProvider.players.last) {
+                                if (gameProvider.votedPlayers.length ==
+                                    gameProvider.players.length) {
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
