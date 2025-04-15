@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:audioplayers/audioplayers.dart';
 import '../providers/game_provider.dart';
 import 'voting_screen.dart';
 
@@ -14,6 +15,7 @@ class _GameScreenState extends State<GameScreen>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _flipAnimation;
+  final AudioPlayer _audioPlayer = AudioPlayer();
 
   @override
   void initState() {
@@ -35,7 +37,12 @@ class _GameScreenState extends State<GameScreen>
   @override
   void dispose() {
     _controller.dispose();
+    _audioPlayer.dispose();
     super.dispose();
+  }
+
+  void _playCardSound() async {
+    await _audioPlayer.play(AssetSource('sounds/card_flip.mp3'));
   }
 
   @override
@@ -105,109 +112,80 @@ class _GameScreenState extends State<GameScreen>
                                     ? () {
                                         gameProvider.drawCard();
                                         _controller.forward(from: 0.0);
+                                        _playCardSound();
                                       }
                                     : null,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(24.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      if (isFrontVisible) ...[
-                                        // Front of card (before flip)
-                                        const Icon(
-                                          Icons.auto_awesome,
-                                          size: 64,
-                                          color: Colors.amber,
+                                    
+                                child: isFrontVisible
+                                    ? Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(16),
+                                          image: DecorationImage(
+                                            image: AssetImage('assets/design/card_design.png'),
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
-                                        const SizedBox(height: 24),
-                                        Text(
-                                          'Tap to Draw a Rizz Card',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headlineSmall,
-                                          textAlign: TextAlign.center,
+                                        padding: const EdgeInsets.all(24.0),
+                                        child: const SizedBox.shrink(), // Empty container for front side
+                                      )
+                                    : Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(16),
+                                          color: Theme.of(context).cardColor,
                                         ),
-                                        const SizedBox(height: 16),
-                                        Text(
-                                          'Tap here or the button below',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge,
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ] else ...[
-                                        // Back of card (after flip)
-                                        Transform(
+                                        padding: const EdgeInsets.all(24.0),
+                                        child: Transform(
                                           alignment: Alignment.center,
-                                          transform: Matrix4.identity()
-                                            ..rotateY(
-                                                3.14159), // Flip back text to be readable
+                                          transform: Matrix4.identity()..rotateY(3.14159),
                                           child: Column(
                                             children: [
-                                              if (gameProvider.currentCard !=
-                                                  null) ...[
+                                              if (gameProvider.currentCard != null) ...[
                                                 Container(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
+                                                  padding: const EdgeInsets.all(8.0),
                                                   decoration: BoxDecoration(
                                                     color: Theme.of(context)
                                                         .colorScheme
                                                         .secondary
                                                         .withOpacity(0.1),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
+                                                    borderRadius: BorderRadius.circular(8),
                                                   ),
                                                   child: Text(
-                                                    gameProvider
-                                                        .currentCard!.category,
+                                                    gameProvider.currentCard!.category,
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .titleSmall
                                                         ?.copyWith(
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .colorScheme
-                                                                  .secondary,
+                                                          color: Theme.of(context).colorScheme.secondary,
                                                         ),
                                                   ),
                                                 ),
                                                 const SizedBox(height: 24),
                                                 Text(
-                                                  gameProvider
-                                                      .currentCard!.text,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .headlineSmall,
+                                                  gameProvider.currentCard!.text,
+                                                  style: Theme.of(context).textTheme.headlineSmall,
                                                   textAlign: TextAlign.center,
                                                 ),
                                                 const SizedBox(height: 24),
                                                 ElevatedButton(
                                                   onPressed: () {
                                                     gameProvider.nextTurn();
-                                                    if (gameProvider
-                                                        .isVotingPhase) {
+                                                    if (gameProvider.isVotingPhase) {
                                                       Navigator.pushReplacement(
                                                         context,
                                                         MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              const VotingScreen(),
+                                                          builder: (context) => const VotingScreen(),
                                                         ),
                                                       );
                                                     }
                                                     _controller.reverse();
                                                   },
-                                                  child:
-                                                      const Text('Next Player'),
+                                                  child: const Text('Next Player'),
                                                 ),
                                               ],
                                             ],
                                           ),
                                         ),
-                                      ],
-                                    ],
-                                  ),
-                                ),
+                                      ),
                               ),
                             ),
                           );
@@ -220,6 +198,7 @@ class _GameScreenState extends State<GameScreen>
                         onPressed: () {
                           gameProvider.drawCard();
                           _controller.forward(from: 0.0);
+                          _playCardSound();
                         },
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),

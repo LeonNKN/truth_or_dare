@@ -23,6 +23,7 @@ class _PlayerSetupScreenState extends State<PlayerSetupScreen> {
     '🎯',
     '🎪'
   ];
+  String? _errorMessage;
 
   @override
   void initState() {
@@ -49,8 +50,24 @@ class _PlayerSetupScreenState extends State<PlayerSetupScreen> {
   }
 
   bool _areAllFieldsFilled() {
+    // Fix the validation to properly check for non-empty names
     return _controllers
         .every((controller) => controller.text.trim().isNotEmpty);
+  }
+  
+  // Fix the duplicate names check to handle empty fields properly
+  bool _hasDuplicateNames() {
+    // Only check non-empty names
+    final names = _controllers
+        .map((c) => c.text.trim())
+        .where((name) => name.isNotEmpty)
+        .toList();
+    
+    // If we have fewer than 2 names, there can't be duplicates
+    if (names.length < 2) return false;
+    
+    final uniqueNames = names.toSet().toList();
+    return names.length != uniqueNames.length;
   }
 
   @override
@@ -136,7 +153,14 @@ class _PlayerSetupScreenState extends State<PlayerSetupScreen> {
                                     ),
                                     border: const OutlineInputBorder(),
                                   ),
-                                  onChanged: (_) => setState(() {}),
+                                  onChanged: (_) {
+                                    // Clear error message when typing
+                                    if (_errorMessage != null) {
+                                      setState(() {
+                                        _errorMessage = null;
+                                      });
+                                    }
+                                  },
                                 ),
                               ),
                             ],
@@ -146,31 +170,52 @@ class _PlayerSetupScreenState extends State<PlayerSetupScreen> {
                     },
                   ),
                 ),
+                
+                // Add error message display
+                if (_errorMessage != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      _errorMessage!,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                
                 const SizedBox(height: 24),
+                // Fix the ElevatedButton's onPressed handler
                 ElevatedButton(
-                  onPressed: _areAllFieldsFilled()
-                      ? () {
-                          final gameProvider =
-                              Provider.of<GameProvider>(context, listen: false);
-                          gameProvider.setPlayers(
-                            _controllers.map((c) => c.text.trim()).toList(),
-                          );
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const RoundSetupScreen(),
-                            ),
-                          );
-                        }
-                      : () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                  'Please enter all player names before proceeding'),
-                              duration: Duration(seconds: 2),
-                            ),
-                          );
-                        },
+                  onPressed: () {
+                    if (!_areAllFieldsFilled()) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Please enter all player names before proceeding'),
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                      return;
+                    }
+                    
+                    if (_hasDuplicateNames()) {
+                      setState(() {
+                        _errorMessage = "Player names must be unique!";
+                      });
+                      return;
+                    }
+                    
+                    final gameProvider = Provider.of<GameProvider>(context, listen: false);
+                    gameProvider.setPlayers(
+                      _controllers.map((c) => c.text.trim()).toList(),
+                    );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const RoundSetupScreen(),
+                      ),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 48,
