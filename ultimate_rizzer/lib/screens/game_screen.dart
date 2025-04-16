@@ -124,6 +124,17 @@ class _GameScreenState extends State<GameScreen>
                                             image: AssetImage('assets/design/card_design.png'),
                                             fit: BoxFit.cover,
                                           ),
+                                          border: Border.all(
+                                            color: Theme.of(context).colorScheme.primary,
+                                            width: 2.5,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                                              blurRadius: 10,
+                                              spreadRadius: 1,
+                                            ),
+                                          ],
                                         ),
                                         padding: const EdgeInsets.all(24.0),
                                         child: const SizedBox.shrink(), // Empty container for front side
@@ -132,6 +143,17 @@ class _GameScreenState extends State<GameScreen>
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(16),
                                           color: Theme.of(context).cardColor,
+                                          border: Border.all(
+                                            color: Theme.of(context).colorScheme.primary,
+                                            width: 2.0,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                                              blurRadius: 10,
+                                              spreadRadius: 1,
+                                            ),
+                                          ],
                                         ),
                                         padding: const EdgeInsets.all(24.0),
                                         child: Transform(
@@ -141,45 +163,55 @@ class _GameScreenState extends State<GameScreen>
                                             children: [
                                               if (gameProvider.currentCard != null) ...[
                                                 Container(
-                                                  padding: const EdgeInsets.all(8.0),
+                                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                                                   decoration: BoxDecoration(
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .secondary
-                                                        .withOpacity(0.1),
-                                                    borderRadius: BorderRadius.circular(8),
+                                                    color: _getCategoryColor(context, gameProvider.currentCard!.category).withOpacity(0.2),
+                                                    borderRadius: BorderRadius.circular(12),
+                                                    border: Border.all(
+                                                      color: _getCategoryColor(context, gameProvider.currentCard!.category),
+                                                      width: 1.5,
+                                                    ),
                                                   ),
                                                   child: Text(
-                                                    gameProvider.currentCard!.category,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .titleSmall
-                                                        ?.copyWith(
-                                                          color: Theme.of(context).colorScheme.secondary,
-                                                        ),
+                                                    gameProvider.currentCard!.category.toUpperCase(),
+                                                    style: TextStyle(
+                                                      color: _getCategoryColor(context, gameProvider.currentCard!.category),
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 16,
+                                                    ),
                                                   ),
                                                 ),
                                                 const SizedBox(height: 24),
-                                                Text(
-                                                  gameProvider.currentCard!.text,
-                                                  style: Theme.of(context).textTheme.headlineSmall,
-                                                  textAlign: TextAlign.center,
+                                                Expanded(
+                                                  child: Center(
+                                                    child: Text(
+                                                      gameProvider.currentCard!.text,
+                                                      style: Theme.of(context).textTheme.headlineSmall,
+                                                      textAlign: TextAlign.center,
+                                                    ),
+                                                  ),
                                                 ),
                                                 const SizedBox(height: 24),
-                                                ElevatedButton(
-                                                  onPressed: () {
-                                                    gameProvider.nextTurn();
-                                                    if (gameProvider.isVotingPhase) {
-                                                      Navigator.pushReplacement(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                          builder: (context) => const VotingScreen(),
-                                                        ),
-                                                      );
-                                                    }
-                                                    _controller.reverse();
-                                                  },
-                                                  child: const Text('Next Player'),
+                                                Center(
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      gameProvider.nextTurn();
+                                                      if (gameProvider.isVotingPhase) {
+                                                        Navigator.pushReplacement(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder: (context) => const VotingScreen(),
+                                                          ),
+                                                        );
+                                                      }
+                                                      _controller.reverse();
+                                                    },
+                                                    style: ElevatedButton.styleFrom(
+                                                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                                                      minimumSize: const Size(150, 48),
+                                                    ),
+                                                    child: const Text('Next Player'),
+                                                  ),
                                                 ),
                                               ],
                                             ],
@@ -213,5 +245,23 @@ class _GameScreenState extends State<GameScreen>
         );
       },
     );
+  }
+  
+  // Helper method to get color based on category
+  Color _getCategoryColor(BuildContext context, String category) {
+    switch (category.toLowerCase()) {
+      case 'intimate':
+        return Colors.pinkAccent;
+      case 'flirty':
+        return Colors.redAccent;
+      case 'funny':
+        return Colors.orangeAccent;
+      case 'bold':
+        return Colors.purpleAccent;
+      case 'creative':
+        return Colors.blueAccent;
+      default:
+        return Theme.of(context).colorScheme.secondary;
+    }
   }
 }
