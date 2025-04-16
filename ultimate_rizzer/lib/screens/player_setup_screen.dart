@@ -279,6 +279,7 @@ class _PlayerSetupScreenState extends State<PlayerSetupScreen> with SingleTicker
                                       labelText: 'Player ${index + 1}',
                                       hintText: 'Enter name with rizz',
                                       hintStyle: TextStyle(
+                                        fontFamily: 'Quicksand',
                                         color: Theme.of(context).hintColor.withOpacity(0.7),
                                       ),
                                       border: OutlineInputBorder(
@@ -388,6 +389,8 @@ class _PlayerSetupScreenState extends State<PlayerSetupScreen> with SingleTicker
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Poppins',
+                        letterSpacing: 0.8,
                       ),
                     ),
                   ),

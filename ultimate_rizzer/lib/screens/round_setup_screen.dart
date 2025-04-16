@@ -168,12 +168,11 @@ class _RoundSetupScreenState extends State<RoundSetupScreen> with SingleTickerPr
                                   Text(
                                     'Casual',
                                     style: TextStyle(
-                                      color: rounds <= 3 
-                                          ? Theme.of(context).colorScheme.primary 
-                                          : Colors.grey,
-                                      fontWeight: rounds <= 3 
-                                          ? FontWeight.bold 
-                                          : FontWeight.normal,
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Poppins',
+                                      color: Colors.white,
+                                      letterSpacing: 0.5,
                                     ),
                                   ),
                                   Text(
@@ -272,7 +271,14 @@ class _RoundSetupScreenState extends State<RoundSetupScreen> with SingleTickerPr
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+                    textStyle: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Poppins',
+                      letterSpacing: 0.8,
+                    ),
+                    // Removed duplicate padding parameter
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),

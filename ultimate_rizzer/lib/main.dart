@@ -30,7 +30,9 @@ class MyApp extends StatelessWidget {
             secondary: const Color(0xFF4ECDC4),
             background: const Color(0xFFF7F7F7),
           ),
-          textTheme: GoogleFonts.poppinsTextTheme(),
+          textTheme: GoogleFonts.quicksandTextTheme(
+            Theme.of(context).textTheme,
+          ),
           useMaterial3: true,
         ),
         home: const PlayerSetupScreen(),

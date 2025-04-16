@@ -82,11 +82,13 @@ class _GameScreenState extends State<GameScreen>
                   children: [
                     Text(
                       "It's ${gameProvider.currentPlayer}'s turn!",
-                      style:
-                          Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontWeight: FontWeight.bold,
-                              ),
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Quicksand',
+                        color: Theme.of(context).colorScheme.primary,
+                        letterSpacing: 0.5,
+                      ),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 40),
@@ -178,6 +180,8 @@ class _GameScreenState extends State<GameScreen>
                                                       color: _getCategoryColor(context, gameProvider.currentCard!.category),
                                                       fontWeight: FontWeight.bold,
                                                       fontSize: 16,
+                                                      fontFamily: 'Poppins',
+                                                      letterSpacing: 1.2,
                                                     ),
                                                   ),
                                                 ),
@@ -186,7 +190,14 @@ class _GameScreenState extends State<GameScreen>
                                                   child: Center(
                                                     child: Text(
                                                       gameProvider.currentCard!.text,
-                                                      style: Theme.of(context).textTheme.headlineSmall,
+                                                      style: TextStyle(
+                                                        fontSize: 24,
+                                                        fontWeight: FontWeight.w600,
+                                                        fontFamily: 'Quicksand',
+                                                        height: 1.3,
+                                                        letterSpacing: 0.5,
+                                                        color: Theme.of(context).textTheme.headlineSmall?.color,
+                                                      ),
                                                       textAlign: TextAlign.center,
                                                     ),
                                                   ),
@@ -209,6 +220,12 @@ class _GameScreenState extends State<GameScreen>
                                                     style: ElevatedButton.styleFrom(
                                                       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                                                       minimumSize: const Size(150, 48),
+                                                      textStyle: const TextStyle(
+                                                        fontFamily: 'Poppins',
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 16,
+                                                        letterSpacing: 1.0,
+                                                      ),
                                                     ),
                                                     child: const Text('Next Player'),
                                                   ),
@@ -234,6 +251,12 @@ class _GameScreenState extends State<GameScreen>
                         },
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
+                          textStyle: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            letterSpacing: 1.0,
+                          ),
                         ),
                         child: const Text('Draw Card'),
                       ),

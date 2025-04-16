@@ -87,9 +87,12 @@ class _VotingScreenState extends State<VotingScreen> with SingleTickerProviderSt
                               const SizedBox(width: 12),
                               Text(
                                 "Voting Time!",
-                                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 24,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
+                                  letterSpacing: 0.8,
                                 ),
                               ),
                               const SizedBox(width: 12),
@@ -116,9 +119,12 @@ class _VotingScreenState extends State<VotingScreen> with SingleTickerProviderSt
                             ),
                             child: Text(
                               "${gameProvider.currentPlayer}'s turn",
-                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              style: TextStyle(
+                                fontFamily: 'Quicksand',
+                                fontSize: 18,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
+                                letterSpacing: 0.5,
                               ),
                             ),
                           ),
