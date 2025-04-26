@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/game_provider.dart';
 import 'player_setup_screen.dart';
+import '../services/bgm_service.dart';
 
 class ResultsScreen extends StatefulWidget {
   const ResultsScreen({super.key});
@@ -26,6 +27,9 @@ class _ResultsScreenState extends State<ResultsScreen> with SingleTickerProvider
       curve: Curves.easeOutBack,
     );
     _controller.forward();
+
+    // Stop background music when leaderboard is shown
+    BgmService().stop();
   }
 
   @override

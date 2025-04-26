@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/game_provider.dart';
 import 'game_screen.dart';
+import '../services/bgm_service.dart';
 
 class RoundSetupScreen extends StatefulWidget {
   const RoundSetupScreen({super.key});
@@ -51,59 +52,17 @@ class _RoundSetupScreenState extends State<RoundSetupScreen> with SingleTickerPr
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: const EdgeInsets.all(12.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Header with animated title
-                FadeTransition(
-                  opacity: _animation,
-                  child: SlideTransition(
-                    position: Tween<Offset>(
-                      begin: const Offset(0, -0.2),
-                      end: Offset.zero,
-                    ).animate(_animation),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary,
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                            "Set Your Rizz Level",
-                            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            "How long do you want to play?",
-                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              color: Colors.white.withOpacity(0.9),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                
+                // Removed: Header with animated title (FadeTransition, SlideTransition, and Container)
                 const SizedBox(height: 40),
                 
                 // Round selection card
                 Expanded(
                   child: Container(
-                    padding: const EdgeInsets.all(24),
+                    padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
@@ -118,30 +77,40 @@ class _RoundSetupScreenState extends State<RoundSetupScreen> with SingleTickerPr
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Round indicator with fire emojis
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            for (int i = 0; i < 5; i++)
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 4),
-                                child: AnimatedOpacity(
-                                  duration: const Duration(milliseconds: 300),
-                                  opacity: i < rounds / 2 ? 1.0 : 0.3,
-                                  child: Text(
-                                    '🔥',
-                                    style: const TextStyle(fontSize: 24),
-                                  ),
-                                ),
-                              ),
-                          ],
+                        // Moved here: "Set Your Rizz Level" text
+                        Text(
+                          "Set Your Rizz Level",
+                          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
+                        // Removed: const SizedBox(height: 16),
+                        // Show only the relevant character image based on rounds
+                        if (rounds <= 3)
+                          Image.asset(
+                            'assets/selection_page/casual_round_character.png',
+                            width: 300,
+                            height: 300,
+                          )
+                        else if (rounds <= 7)
+                          Image.asset(
+                            'assets/selection_page/balanced_round_character.png',
+                            width: 300,
+                            height: 300,
+                          )
+                        else
+                          Image.asset(
+                            'assets/selection_page/ultimate_round_character.png',
+                            width: 300,
+                            height: 300,
+                          ),
                         
                         const SizedBox(height: 24),
-                        
+
                         // Round number display
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                           decoration: BoxDecoration(
                             color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(16),
@@ -155,7 +124,7 @@ class _RoundSetupScreenState extends State<RoundSetupScreen> with SingleTickerPr
                           ),
                         ),
                         
-                        const SizedBox(height: 40),
+                        // Removed: const SizedBox(height: 40),
                         
                         // Custom slider with better visual feedback
                         Column(
@@ -168,33 +137,31 @@ class _RoundSetupScreenState extends State<RoundSetupScreen> with SingleTickerPr
                                   Text(
                                     'Casual',
                                     style: TextStyle(
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Poppins',
-                                      color: Colors.white,
-                                      letterSpacing: 0.5,
+                                      fontSize: 16, // Smaller text size
+                                      fontWeight: rounds <= 3 ? FontWeight.bold : FontWeight.normal,
+                                      color: rounds <= 3
+                                          ? Theme.of(context).colorScheme.primary
+                                          : Colors.grey,
                                     ),
                                   ),
                                   Text(
-                                    'Balanced',
+                                    'Balance',
                                     style: TextStyle(
-                                      color: rounds > 3 && rounds <= 7 
-                                          ? Theme.of(context).colorScheme.primary 
+                                      fontSize: 16, // Smaller text size
+                                      fontWeight: (rounds > 3 && rounds <= 7) ? FontWeight.bold : FontWeight.normal,
+                                      color: (rounds > 3 && rounds <= 7)
+                                          ? Theme.of(context).colorScheme.primary
                                           : Colors.grey,
-                                      fontWeight: rounds > 3 && rounds <= 7 
-                                          ? FontWeight.bold 
-                                          : FontWeight.normal,
                                     ),
                                   ),
                                   Text(
                                     'Ultimate',
                                     style: TextStyle(
-                                      color: rounds > 7 
-                                          ? Theme.of(context).colorScheme.primary 
+                                      fontSize: 16, // Smaller text size
+                                      fontWeight: rounds > 7 ? FontWeight.bold : FontWeight.normal,
+                                      color: rounds > 7
+                                          ? Theme.of(context).colorScheme.primary
                                           : Colors.grey,
-                                      fontWeight: rounds > 7 
-                                          ? FontWeight.bold 
-                                          : FontWeight.normal,
                                     ),
                                   ),
                                 ],
@@ -258,7 +225,8 @@ class _RoundSetupScreenState extends State<RoundSetupScreen> with SingleTickerPr
                 
                 // Start game button
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    await BgmService().play(); // Start background music
                     final gameProvider = Provider.of<GameProvider>(context, listen: false);
                     gameProvider.initializeGame(gameProvider.players, rounds);
                     Navigator.pushReplacement(

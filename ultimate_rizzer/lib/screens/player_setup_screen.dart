@@ -87,7 +87,7 @@ class _PlayerSetupScreenState extends State<PlayerSetupScreen> with SingleTicker
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: const EdgeInsets.all(12.0),
             child: Column(
               children: [
                 // Header with animated title
@@ -98,33 +98,23 @@ class _PlayerSetupScreenState extends State<PlayerSetupScreen> with SingleTicker
                       begin: const Offset(0, -0.2),
                       end: Offset.zero,
                     ).animate(_animation),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary,
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 1.0), // Reduced vertical padding
                       child: Column(
                         children: [
-                          Text(
-                            "Ultimate Rizzer",
-                            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          Image.asset(
+                            'assets/selection_page/rizzer_banner.png',
+                            width: MediaQuery.of(context).size.width - 32,
+                            height: 160,
+                            fit: BoxFit.contain,
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 1), // Spacing set to 1
                           Text(
                             "Who's Ready to Rizz?",
                             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              color: Colors.white.withOpacity(0.9),
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic,
                             ),
                           ),
                         ],
@@ -136,96 +126,57 @@ class _PlayerSetupScreenState extends State<PlayerSetupScreen> with SingleTicker
                 const SizedBox(height: 32),
                 
                 // Player count selector with modern design
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        "Players",
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
+                      // Minus icon
+                      InkWell(
+                        onTap: playerCount > 2
+                            ? () {
+                                setState(() {
+                                  playerCount--;
+                                  _updateControllers();
+                                });
+                              }
+                            : null,
+                        child: Icon(
+                          Icons.remove,
+                          color: playerCount > 2
+                              ? Theme.of(context).colorScheme.primary
+                              : Colors.grey,
+                          size: 24,
                         ),
                       ),
-                      Row(
-                        children: [
-                          InkWell(
-                            onTap: playerCount > 2
-                                ? () {
-                                    setState(() {
-                                      playerCount--;
-                                      _updateControllers();
-                                    });
-                                  }
-                                : null,
-                            child: Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: playerCount > 2
-                                    ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
-                                    : Colors.grey.withOpacity(0.1),
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                Icons.remove,
-                                color: playerCount > 2
-                                    ? Theme.of(context).colorScheme.primary
-                                    : Colors.grey,
-                              ),
+                      const SizedBox(width: 32), // Increased spacing
+                      // Player count number
+                      Text(
+                        '$playerCount',
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.secondary,
+                              fontSize: 20,
                             ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 16),
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Text(
-                              '$playerCount',
-                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: playerCount < 8
-                                ? () {
-                                    setState(() {
-                                      playerCount++;
-                                      _updateControllers();
-                                    });
-                                  }
-                                : null,
-                            child: Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: playerCount < 8
-                                    ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
-                                    : Colors.grey.withOpacity(0.1),
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                Icons.add,
-                                color: playerCount < 8
-                                    ? Theme.of(context).colorScheme.primary
-                                    : Colors.grey,
-                              ),
-                            ),
-                          ),
-                        ],
+                      ),
+                      const SizedBox(width: 32), // Increased spacing
+                      // Plus icon
+                      InkWell(
+                        onTap: playerCount < 8
+                            ? () {
+                                setState(() {
+                                  playerCount++;
+                                  _updateControllers();
+                                });
+                              }
+                            : null,
+                        child: Icon(
+                          Icons.add,
+                          color: playerCount < 8
+                              ? Theme.of(context).colorScheme.primary
+                              : Colors.grey,
+                          size: 24,
+                        ),
                       ),
                     ],
                   ),
@@ -258,16 +209,18 @@ class _PlayerSetupScreenState extends State<PlayerSetupScreen> with SingleTicker
                             child: Row(
                               children: [
                                 Container(
-                                  width: 50,
-                                  height: 50,
+                                  width: 70, // Increased from 50
+                                  height: 70, // Increased from 50
                                   decoration: BoxDecoration(
                                     color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
                                     shape: BoxShape.circle,
                                   ),
                                   child: Center(
-                                    child: Text(
-                                      _avatars[index % _avatars.length],
-                                      style: const TextStyle(fontSize: 24),
+                                    child: Image.asset(
+                                      'assets/selection_page/character${index + 1}.png',
+                                      width: 56,
+                                      height: 56,
+                                      fit: BoxFit.contain,
                                     ),
                                   ),
                                 ),

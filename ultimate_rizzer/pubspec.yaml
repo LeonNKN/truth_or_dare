@@ -64,10 +64,11 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/selection_page/
     - assets/icon/
-    - assets/icon/app_icon.png
-    - assets/design/card_design.png
-    - assets/sound/card_flip.mp3
+    - assets/selection_page/
+    - assets/design/
+    - assets/sound/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -95,3 +96,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+

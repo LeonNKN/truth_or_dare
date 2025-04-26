@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => GameProvider(),
       child: MaterialApp(
-        title: 'Rizz Royale',
+        title: 'Ultimate Rizzer',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
@@ -30,7 +30,8 @@ class MyApp extends StatelessWidget {
             secondary: const Color(0xFF4ECDC4),
             background: const Color(0xFFF7F7F7),
           ),
-          textTheme: GoogleFonts.quicksandTextTheme(
+          // Set the main font family to Poppins
+          textTheme: GoogleFonts.poppinsTextTheme(
             Theme.of(context).textTheme,
           ),
           useMaterial3: true,

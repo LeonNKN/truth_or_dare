@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:audioplayers/audioplayers.dart';
 import '../providers/game_provider.dart';
+import '../services/bgm_service.dart';
 import 'voting_screen.dart';
 
 class GameScreen extends StatefulWidget {
@@ -57,6 +58,7 @@ class _GameScreenState extends State<GameScreen>
               IconButton(
                 icon: const Icon(Icons.refresh),
                 onPressed: () {
+                  BgmService().stop(); // Stop background music
                   gameProvider.resetGame();
                   Navigator.pop(context);
                 },
